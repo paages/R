@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rania & Elarbi ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. CSS VARIABLES & RESET
+           ========================================= */
+        :root {
+            --primary: #ff758c;
+            --secondary: #ff7eb3;
+            --text-dark: #4a4a4a;
+            --text-light: #888888;
+            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Removes blue highlight on mobile tap */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(to right, #ffdde1, #ee9ca7);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. ANIMATIONS (Falling Petals)
+           ========================================= */
+        #petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background-color: #fff0f5;
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translate(100px, 110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* =========================================
+           3. LAYOUT & TYPOGRAPHY
+           ========================================= */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* Responsive Font Sizing */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            /* clamp(min, preferred, max) scales text smoothly */
+            font-size: clamp(3.5rem, 10vw, 6rem); 
+            background: -webkit-linear-gradient(var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            line-height: 1.1;
+            padding-top: 20px;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            color: #666;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           4. COMPONENTS
+           ========================================= */
+        
+        /* --- TIMER CARD --- */
+        .love-timer {
+            background: var(--glass-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+            margin: 50px auto;
+            max-width: 700px;
+            transition: transform 0.3s ease;
+        }
+
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Desktop: 4 side by side */
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .time-box {
+            background: linear-gradient(to bottom right, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 10px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+        }
+
+        .time-val { font-size: 2rem; font-weight: 700; display: block; line-height: 1; }
+        .time-label { font-size: 0.85rem; opacity: 0.95; font-weight: 400; margin-top: 5px; display: block;}
+
+        /* --- GALLERY GRID --- */
+        .gallery-title {
+            font-family: 'Dancing Script';
+            font-size: 2.8rem;
+            color: #555;
+            margin: 60px 0 30px 0;
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px; /* Increased gap for 2 photos */
+        }
+
+        .photo-card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-soft);
+            width: 320px; /* Slightly wider for better focus */
+            max-width: 100%; /* Prevents overflow on mobile */
+            aspect-ratio: 3/4; /* Maintains rectangle shape */
+            transition: transform 0.1s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 85%;
+            object-fit: cover;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .caption {
+            margin-top: 15px;
+            font-family: 'Dancing Script';
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        /* --- MUSIC BUTTON --- */
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 100;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.2s;
+        }
+        
+        .music-toggle:active { transform: scale(0.9); }
+
+        /* =========================================
+           5. MOBILE MEDIA QUERIES
+           ========================================= */
+        @media (max-width: 768px) {
+            .container { padding: 20px 15px; }
+            
+            /* Change Timer to 2x2 Grid on Mobile */
+            .timer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .time-val { font-size: 1.8rem; }
+            
+            /* Disable 3D tilt on mobile for better scrolling */
+            .photo-card {
+                transform: none !important; /* Forces flat design on mobile */
+                width: 100%; /* Full width on small phones */
+                margin-bottom: 20px;
+            }
+            
+            .photo-card:active {
+                transform: scale(0.98) !important; /* Simple press effect */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="petals-container"></div>
+
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-toggle" onclick="toggleMusic()">
+        <span class="music-icon">🎵</span>
+    </div>
+
+    <div class="container">
+        
+        <header>
+            <h1>Rania & Elarbi</h1>
+            <div class="subtitle">Written in the stars, coded with love</div>
+        </header>
+
+        <div class="love-timer">
+            <h3 style="margin:0; color:#555; font-weight: 400;">Together since September 28, 2025</h3>
+            <div class="timer-grid">
+                <div class="time-box"><span id="days" class="time-val">0</span><span class="time-label">Days</span></div>
+                <div class="time-box"><span id="hours" class="time-val">0</span><span class="time-label">Hours</span></div>
+                <div class="time-box"><span id="minutes" class="time-val">0</span><span class="time-label">Minutes</span></div>
+                <div class="time-box"><span id="seconds" class="time-val">0</span><span class="time-label">Seconds</span></div>
+            </div>
+            <p style="margin-top:20px; font-style: italic; color:var(--text-light); font-size: 0.9rem;">
+                "And I've loved every second of it."
+            </p>
+        </div>
+
+        <h2 class="gallery-title">Our Best Moments</h2>
+        
+        <div class="gallery-container">
+            
+            <div class="photo-card" id="card1">
+                <img src="1.jpeg" alt="Us Together">
+                <div class="caption">My Style, Your Grace</div>
+            </div>
+
+            <div class="photo-card" id="card2">
+                <img src="2.jpeg" alt="Smiles">
+                <div class="caption">Pure Happiness</div>
+            </div>
+
+        </div>
+
+        <footer style="margin-top: 80px; opacity: 0.6; font-size: 0.8rem; padding-bottom: 80px;">
+            Made by Elarbi for Rania ❤️
+        </footer>
+
+    </div>
+
+    <script>
+        // =========================================
+        // 1. DATES CONFIGURATION
+        // =========================================
+        // September 28, 2025 (Month is 0-indexed: Sept = 8)
+        const startDate = new Date(2025, 8, 28); 
+
+        // =========================================
+        // 2. PETALS ANIMATION LOGIC
+        // =========================================
+        function createPetals() {
+            const container = document.getElementById('petals-container');
+            const petalCount = 20; 
+
+            for(let i=0; i<petalCount; i++){
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                petal.style.width = (Math.random() * 10 + 10) + 'px';
+                petal.style.height = (Math.random() * 10 + 10) + 'px';
+                container.appendChild(petal);
+            }
+        }
+        createPetals();
+
+        // =========================================
+        // 3. TIMER LOGIC
+        // =========================================
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            if (diff < 0) return; 
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // =========================================
+        // 4. DESKTOP-ONLY 3D TILT LOGIC
+        // =========================================
+        if (window.matchMedia("(hover: hover)").matches) {
+            const cards = document.querySelectorAll('.photo-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+                });
+            });
+        }
+
+        // =========================================
+        // 5. MUSIC LOGIC
+        // =========================================
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const icon = document.querySelector('.music-icon');
+            if(audio.paused) {
+                audio.play();
+                icon.innerText = '⏸️';
+            } else {
+                audio.pause();
+                icon.innerText = '🎵';
+            }
+        }
+    </script>
+</body>
+</html>
