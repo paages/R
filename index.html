@@ -26,17 +26,40 @@
         html, body {
             min-height: 100dvh;
             width: 100vw;
-            overflow-x: hidden; /* Prevent horizontal scroll from animations */
-            overflow-y: auto;   /* Allow vertical scroll on small screens */
+            overflow-x: hidden;
+            overflow-y: auto;
             font-family: var(--sans);
             color: var(--text-light);
             background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
-            background-attachment: fixed; /* Keeps gradient stable on scroll */
+            background-attachment: fixed;
+        }
+
+        /* --- WELCOME SCREEN --- */
+        #welcome-screen {
+            position: fixed; inset: 0;
+            background: var(--bg-top);
+            z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        #enter-btn {
+            background: rgba(223, 177, 96, 0.1); border: 2px solid var(--gold);
+            color: var(--gold); padding: 15px 40px; font-family: var(--serif);
+            font-size: 1.5rem; border-radius: 50px; cursor: pointer;
+            letter-spacing: 2px; text-transform: uppercase;
+            animation: heartbeatBtn 2s infinite;
+        }
+
+        @keyframes heartbeatBtn {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(223, 177, 96, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(223, 177, 96, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(223, 177, 96, 0); }
         }
 
         /* --- MAGICAL RAIN (Hearts & Stars) --- */
         .rain-container {
-            position: fixed; inset: 0; /* Changed to fixed so rain covers whole scrolled area */
+            position: fixed; inset: 0;
             pointer-events: none; z-index: 1; overflow: hidden;
         }
         
@@ -64,7 +87,7 @@
             100% { transform: translateY(110vh) translateX(30px) rotate(360deg); opacity: 0; }
         }
 
-        /* --- MY IDEA: SHOOTING STARS --- */
+        /* --- SHOOTING STARS --- */
         .shooting-star {
             position: absolute;
             width: 150px;
@@ -107,7 +130,7 @@
 
         /* Music Button */
         #musicToggle {
-            position: fixed; /* Changed to fixed to stay visible on scroll */
+            position: fixed;
             right: 3vw; top: 3vh;
             background: rgba(223, 177, 96, 0.1); border: 1px solid var(--gold);
             color: var(--gold); width: 45px; height: 45px;
@@ -117,22 +140,21 @@
         }
         #musicToggle:hover { background: var(--gold); color: var(--bg-top); transform: scale(1.1) rotate(10deg); box-shadow: 0 0 15px var(--gold); }
 
-        /* --- ORGANIZED MAIN LAYOUT --- */
+        /* --- MAIN LAYOUT --- */
         .main-layout {
             position: relative; z-index: 10;
             display: grid; grid-template-columns: 1.2fr 1fr;
             padding: 4vh 5vw; min-height: 100dvh;
-            padding-bottom: 12vh; /* Space for signature */
+            padding-bottom: 12vh;
         }
 
-        /* LEFT SIDE: Text, Digital Time, Button */
+        /* LEFT SIDE */
         .left-panel {
             display: flex; flex-direction: column;
             justify-content: center; align-items: flex-start;
             padding-right: 4vw;
         }
 
-        /* Shimmering Title Effect */
         .title { 
             font-family: var(--script); 
             font-size: clamp(3.5rem, 6.5vw, 6rem); 
@@ -157,7 +179,6 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 0 20px rgba(223, 177, 96, 0.05);
             animation: subtleGlow 4s infinite alternate; flex-wrap: wrap; 
         }
-        
         @keyframes subtleGlow {
             0% { box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 0 10px rgba(223, 177, 96, 0.05); }
             100% { box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 0 25px rgba(223, 177, 96, 0.25); border-color: rgba(223, 177, 96, 0.5); }
@@ -175,13 +196,12 @@
         }
         .btn-letter:hover { background: var(--gold); color: var(--bg-top); box-shadow: 0 5px 25px rgba(223, 177, 96, 0.6); transform: translateY(-3px); }
 
-        /* RIGHT SIDE: Organized Photos */
+        /* RIGHT SIDE */
         .right-panel {
             display: flex; align-items: center; justify-content: center;
             gap: 2vw; position: relative;
         }
 
-        /* Enhanced Photo Glowing Aura */
         .photo-container { position: relative; }
         .photo-container::before {
             content: ''; position: absolute; inset: -10px;
@@ -200,7 +220,6 @@
         .photo-container:nth-child(2) { transform: translateY(40px); }
         .photo-container:hover .photo { transform: scale(1.05); border-color: var(--gold); box-shadow: 0 25px 50px rgba(0,0,0,0.8); z-index: 20; }
 
-        /* Golden Shine Animation on Photos */
         .photo::after {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
@@ -208,7 +227,7 @@
         }
         @keyframes shineSweep { 0%, 70% { left: -100%; } 100% { left: 200%; } }
 
-        /* --- CENTERED FOOTER SIGNATURE --- */
+        /* FOOTER SIGNATURE */
         .signature-text { 
             position: absolute; bottom: 3vh; left: 50%; transform: translateX(-50%);
             font-family: var(--script); font-size: clamp(1.2rem, 2vw, 1.5rem); 
@@ -223,7 +242,7 @@
         }
         @keyframes realHeartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.3); } 30% { transform: scale(1); } 45% { transform: scale(1.3); } 60% { transform: scale(1); } }
 
-        /* Letter Modal */
+        /* MODAL */
         .modal {
             position: fixed; inset: 0; background: rgba(10, 5, 15, 0.9); backdrop-filter: blur(8px);
             display: flex; align-items: center; justify-content: center; z-index: 200; opacity: 0; pointer-events: none; transition: 0.4s;
@@ -232,8 +251,7 @@
         .modal-card {
             background: linear-gradient(135deg, var(--bg-top), #1a0b18); padding: 40px; border: 1px solid rgba(223, 177, 96, 0.5);
             border-radius: 12px; text-align: center; max-width: 550px; width: 90%;
-            max-height: 85vh; /* Prevents modal from outgrowing screen vertically */
-            overflow-y: auto; /* Allows scrolling inside the modal if text is too long */
+            max-height: 85vh; overflow-y: auto; 
             transform: translateY(30px) scale(0.95); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 20px 60px rgba(223, 177, 96, 0.15);
         }
         .modal.active .modal-card { transform: translateY(0) scale(1); }
@@ -245,7 +263,7 @@
         .letter-content .modal-sig { font-family: var(--script); font-size: 1.8rem; color: var(--gold); margin-top: 30px; }
         .letter-content .ps-text { font-family: var(--sans); font-size: 1rem; color: var(--love-red); margin-top: 10px; font-style: italic; }
 
-        /* --- MOBILE LAYOUT --- */
+        /* MOBILE LAYOUT */
         @media (max-width: 900px) {
             .main-layout {
                 grid-template-columns: 1fr;
@@ -277,6 +295,10 @@
 </head>
 <body>
 
+    <div id="welcome-screen">
+        <button id="enter-btn">Tap for a surprise ❤️</button>
+    </div>
+
     <div class="rain-container" id="rainArea"></div>
     <button id="musicToggle">♪</button>
 
@@ -286,8 +308,7 @@
             <h1 class="title">Rania & Elarbi</h1>
             <p class="subtitle">Since September 28, 2025</p>
 
-            <div class="time-tracker" id="timeData">
-                </div>
+            <div class="time-tracker" id="timeData"></div>
 
             <button class="btn-letter" onclick="document.getElementById('letterModal').classList.add('active')">Read My Letter</button>
         </div>
@@ -323,14 +344,14 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // 1. Generate Falling Rain (Mixture of Stars and Hearts)
+        // 1. Generate Falling Rain
         const rainArea = document.getElementById('rainArea');
         const starSymbols = ['★', '✨', '⋆'];
         const heartSymbols = ['♥', '♡'];
         
         for(let i=0; i<60; i++) {
             let el = document.createElement('div');
-            let isStar = Math.random() > 0.4; // 60% chance of being a star, 40% heart
+            let isStar = Math.random() > 0.4;
             
             el.className = 'falling-item ' + (isStar ? 'star' : 'heart');
             el.innerHTML = isStar 
@@ -353,23 +374,31 @@
             rainArea.appendChild(shootEl);
         }
 
-        // 3. Interactive Click Magic (Heart + Ripple) & Music AutoPlay Trigger
         let musicStarted = false;
-        document.addEventListener('click', function(e) {
-            // AutoPlay Music on first click anywhere
-            if(!musicStarted && player && typeof player.playVideo === 'function') {
+
+        // 3. Welcome Screen Logic & Autoplay Music Trigger
+        document.getElementById('enter-btn').addEventListener('click', function() {
+            // Fade out the welcome screen
+            const welcomeScreen = document.getElementById('welcome-screen');
+            welcomeScreen.style.opacity = '0';
+            setTimeout(() => welcomeScreen.style.visibility = 'hidden', 1000);
+            
+            // Start the music!
+            if(player && typeof player.playVideo === 'function') {
                 player.playVideo();
                 document.getElementById('musicToggle').innerText = '❚❚';
                 musicStarted = true;
             }
+        });
 
-            if(e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+        // 4. Interactive Click Magic (Heart + Ripple) on main page
+        document.addEventListener('click', function(e) {
+            // Ignore clicks on buttons or the welcome screen itself
+            if(e.target.tagName === 'BUTTON' || e.target.closest('button') || document.getElementById('welcome-screen').style.visibility !== 'hidden') return;
             
             // Spawn Click Heart
             const clickHeart = document.createElement('div');
             clickHeart.className = 'click-heart'; clickHeart.innerHTML = '♥';
-            
-            // Account for page scroll in absolute positioning
             clickHeart.style.left = e.pageX + 'px'; clickHeart.style.top = e.pageY + 'px';
             document.body.appendChild(clickHeart);
             
@@ -382,7 +411,7 @@
             setTimeout(() => { clickHeart.remove(); ripple.remove(); }, 1200);
         });
 
-        // 4. Smart Time Calculator
+        // 5. Smart Time Calculator
         const startDate = new Date(2025, 8, 28, 0, 0, 0); // Month 8 is Sept (0-indexed)
 
         function updateAllTime() {
@@ -427,7 +456,7 @@
 
         setInterval(updateAllTime, 1000); updateAllTime();
 
-        // 5. YouTube Music Player
+        // 6. YouTube Music Player
         let player;
         const musicBtn = document.getElementById('musicToggle');
         function onYouTubeIframeAPIReady() {
