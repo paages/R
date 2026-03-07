@@ -24,17 +24,19 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body {
-            height: 100dvh;
+            min-height: 100dvh;
             width: 100vw;
-            overflow: hidden; /* STRICTLY NO SCROLLING */
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+            overflow-y: auto;   /* Allow vertical scroll on small screens */
             font-family: var(--sans);
             color: var(--text-light);
             background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
+            background-attachment: fixed; /* Keeps gradient stable on scroll */
         }
 
         /* --- MAGICAL RAIN (Hearts & Stars) --- */
         .rain-container {
-            position: absolute; inset: 0;
+            position: fixed; inset: 0; /* Changed to fixed so rain covers whole scrolled area */
             pointer-events: none; z-index: 1; overflow: hidden;
         }
         
@@ -105,7 +107,8 @@
 
         /* Music Button */
         #musicToggle {
-            position: absolute; right: 3vw; top: 3vh;
+            position: fixed; /* Changed to fixed to stay visible on scroll */
+            right: 3vw; top: 3vh;
             background: rgba(223, 177, 96, 0.1); border: 1px solid var(--gold);
             color: var(--gold); width: 45px; height: 45px;
             border-radius: 50%; cursor: pointer; display: flex;
@@ -116,9 +119,10 @@
 
         /* --- ORGANIZED MAIN LAYOUT --- */
         .main-layout {
-            position: absolute; inset: 0; z-index: 10;
+            position: relative; z-index: 10;
             display: grid; grid-template-columns: 1.2fr 1fr;
-            padding: 4vh 5vw; height: 100dvh;
+            padding: 4vh 5vw; min-height: 100dvh;
+            padding-bottom: 12vh; /* Space for signature */
         }
 
         /* LEFT SIDE: Text, Digital Time, Button */
@@ -228,6 +232,8 @@
         .modal-card {
             background: linear-gradient(135deg, var(--bg-top), #1a0b18); padding: 40px; border: 1px solid rgba(223, 177, 96, 0.5);
             border-radius: 12px; text-align: center; max-width: 550px; width: 90%;
+            max-height: 85vh; /* Prevents modal from outgrowing screen vertically */
+            overflow-y: auto; /* Allows scrolling inside the modal if text is too long */
             transform: translateY(30px) scale(0.95); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 20px 60px rgba(223, 177, 96, 0.15);
         }
         .modal.active .modal-card { transform: translateY(0) scale(1); }
@@ -243,24 +249,27 @@
         @media (max-width: 900px) {
             .main-layout {
                 grid-template-columns: 1fr;
-                display: flex; flex-direction: column; justify-content: flex-start;
-                align-items: center; padding: 5vh 4vw; text-align: center; gap: 4vh;
+                display: flex; flex-direction: column; justify-content: center;
+                align-items: center; padding: 6vh 4vw 15vh 4vw; text-align: center; gap: 4vh;
             }
             .left-panel { align-items: center; padding-right: 0; width: 100%; flex: 0 0 auto; }
-            .title { font-size: clamp(3rem, 10vw, 4rem); margin-top: 2vh;}
-            .subtitle { margin-bottom: 3vh; }
+            .title { font-size: clamp(3.2rem, 12vw, 4rem); margin-top: 4vh;}
+            .subtitle { margin-bottom: 4vh; font-size: 0.9rem;}
             
-            .time-tracker { padding: 2vh 2vw; margin-bottom: 0; gap: 2vw; justify-content: center; }
+            .time-tracker { padding: 2vh 3vw; margin-bottom: 2vh; gap: 2vw; justify-content: center; }
             .time-block { min-width: 45px; }
+            .time-block span { font-size: 1.8rem; }
             
-            .right-panel { flex-direction: row; gap: 4vw; width: 100%; flex: 0 0 auto; margin-bottom: 3vh; }
-            .photo { height: 20vh; width: auto; max-width: 45%; }
-            .photo-container:nth-child(2) { transform: translateY(0); } 
+            .right-panel { flex-direction: row; gap: 6vw; width: 100%; flex: 0 0 auto; margin-bottom: 2vh; }
+            .photo { height: auto; width: 40vw; max-width: 180px; }
+            .photo-container:nth-child(2) { transform: translateY(20px); } 
 
-            .btn-letter { padding: 10px 25px; font-size: 0.8rem;}
+            .btn-letter { padding: 12px 25px; font-size: 0.85rem; margin-top: 2vh;}
             #musicToggle { top: 2vh; right: 4vw; width: 40px; height: 40px; }
-            .signature-text { bottom: 2vh; font-size: 1.1rem; }
             
+            .signature-text { bottom: 3vh; font-size: 1rem; }
+            
+            .modal-card { padding: 30px 20px; }
             .letter-content h2 { font-size: 2.2rem; }
             .letter-content p { font-size: 0.95rem; }
         }
@@ -359,13 +368,15 @@
             // Spawn Click Heart
             const clickHeart = document.createElement('div');
             clickHeart.className = 'click-heart'; clickHeart.innerHTML = '♥';
-            clickHeart.style.left = e.clientX + 'px'; clickHeart.style.top = e.clientY + 'px';
+            
+            // Account for page scroll in absolute positioning
+            clickHeart.style.left = e.pageX + 'px'; clickHeart.style.top = e.pageY + 'px';
             document.body.appendChild(clickHeart);
             
             // Spawn Ripple
             const ripple = document.createElement('div');
             ripple.className = 'click-ripple';
-            ripple.style.left = e.clientX + 'px'; ripple.style.top = e.clientY + 'px';
+            ripple.style.left = e.pageX + 'px'; ripple.style.top = e.pageY + 'px';
             document.body.appendChild(ripple);
 
             setTimeout(() => { clickHeart.remove(); ripple.remove(); }, 1200);
@@ -401,7 +412,6 @@
 
             let html = '';
             
-            // Only show years block if it's 1 or more
             if (years > 0) {
                 html += `<div class="time-block"><span>${years.toString().padStart(2, '0')}</span><label>Years</label></div>`;
             }
