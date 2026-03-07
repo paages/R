@@ -3,370 +3,429 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rania & Elarbi ❤️</title>
+    <meta name="theme-color" content="#7A1A23">
+    <title>Rania & Elarbi | Forever</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
-           1. CSS VARIABLES & RESET
+           1. MATTE RED & CHAMPAGNE PALETTE
            ========================================= */
         :root {
-            --primary: #ff758c;
-            --secondary: #ff7eb3;
-            --text-dark: #4a4a4a;
-            --text-light: #888888;
-            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            --glass-bg: rgba(255, 255, 255, 0.95);
-            --shadow-soft: 0 10px 30px rgba(0,0,0,0.1);
+            --matte-red: #7A1A23;       
+            --dark-red: #5E1118;        
+            --text-light: #F9EBEA;      
+            --accent-gold: #DCA771;     
+            
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Lato', sans-serif;
         }
 
         * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Removes blue highlight on mobile tap */
-        }
-
-        body {
             margin: 0;
             padding: 0;
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(to right, #ffdde1, #ee9ca7);
-            color: var(--text-dark);
-            overflow-x: hidden;
-            min-height: 100vh;
+            box-sizing: border-box;
         }
 
-        /* =========================================
-           2. ANIMATIONS (Falling Petals)
-           ========================================= */
-        #petals-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+        /* Strict No-Scroll Lock */
+        html, body {
+            height: 100dvh;
+            width: 100vw;
             overflow: hidden;
-        }
-
-        .petal {
-            position: absolute;
-            background-color: #fff0f5;
-            border-radius: 150% 0 150% 0;
-            animation: fall linear infinite;
-            opacity: 0.8;
-        }
-
-        @keyframes fall {
-            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translate(100px, 110vh) rotate(720deg); opacity: 0; }
-        }
-
-        /* =========================================
-           3. LAYOUT & TYPOGRAPHY
-           ========================================= */
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
-
-        /* Responsive Font Sizing */
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            /* clamp(min, preferred, max) scales text smoothly */
-            font-size: clamp(3.5rem, 10vw, 6rem); 
-            background: -webkit-linear-gradient(var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-            line-height: 1.1;
-            padding-top: 20px;
-        }
-
-        .subtitle {
-            font-size: clamp(1rem, 4vw, 1.4rem);
-            color: #666;
-            margin-top: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* =========================================
-           4. COMPONENTS
-           ========================================= */
-        
-        /* --- TIMER CARD --- */
-        .love-timer {
-            background: var(--glass-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: var(--shadow-soft);
-            margin: 50px auto;
-            max-width: 700px;
-            transition: transform 0.3s ease;
-        }
-
-        .timer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Desktop: 4 side by side */
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .time-box {
-            background: linear-gradient(to bottom right, var(--primary), var(--secondary));
-            color: white;
-            padding: 15px 10px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
-        }
-
-        .time-val { font-size: 2rem; font-weight: 700; display: block; line-height: 1; }
-        .time-label { font-size: 0.85rem; opacity: 0.95; font-weight: 400; margin-top: 5px; display: block;}
-
-        /* --- GALLERY GRID --- */
-        .gallery-title {
-            font-family: 'Dancing Script';
-            font-size: 2.8rem;
-            color: #555;
-            margin: 60px 0 30px 0;
-        }
-
-        .gallery-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px; /* Increased gap for 2 photos */
-        }
-
-        .photo-card {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: var(--shadow-soft);
-            width: 320px; /* Slightly wider for better focus */
-            max-width: 100%; /* Prevents overflow on mobile */
-            aspect-ratio: 3/4; /* Maintains rectangle shape */
-            transition: transform 0.1s;
-            transform-style: preserve-3d;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .photo-card img {
-            width: 100%;
-            height: 85%;
-            object-fit: cover;
-            border-radius: 10px;
-            pointer-events: none;
-        }
-
-        .caption {
-            margin-top: 15px;
-            font-family: 'Dancing Script';
-            font-size: 1.8rem;
-            color: var(--primary);
-        }
-
-        /* --- MUSIC BUTTON --- */
-        .music-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 55px;
-            height: 55px;
-            background: white;
-            border-radius: 50%;
+            background-color: var(--matte-red);
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            z-index: 100;
-            border: 2px solid var(--primary);
-            cursor: pointer;
-            font-size: 1.5rem;
-            transition: transform 0.2s;
         }
-        
-        .music-toggle:active { transform: scale(0.9); }
+
+        /* Delicate outer gold frame */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 15px;
+            border: 1px solid rgba(220, 167, 113, 0.3);
+            pointer-events: none;
+            z-index: 50;
+        }
 
         /* =========================================
-           5. MOBILE MEDIA QUERIES
+           2. AUDIO CONTROL
+           ========================================= */
+        .audio-btn {
+            position: absolute;
+            top: 35px;
+            right: 35px;
+            z-index: 100;
+            background: rgba(94, 17, 24, 0.6);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--accent-gold);
+            border-radius: 50px;
+            padding: 8px 16px;
+            color: var(--accent-gold);
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .audio-btn.ready {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .audio-btn:hover {
+            background: var(--accent-gold);
+            color: var(--dark-red);
+        }
+
+        .audio-btn .music-icon { font-size: 0.8rem; animation: pulse 2s infinite; }
+        .audio-btn.paused .music-icon { animation: none; opacity: 0.5; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #youtube-player {
+            position: absolute; width: 0; height: 0; top: -9999px; left: -9999px; opacity: 0;
+        }
+
+        /* =========================================
+           3. MAIN LAYOUT
+           ========================================= */
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .divider {
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            bottom: 10%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(220, 167, 113, 0.4), transparent);
+            z-index: 20;
+        }
+
+        /* --- LEFT: ROMANTIC TYPOGRAPHY --- */
+        .text-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8vw;
+            opacity: 0;
+            animation: fade-in 1.5s ease-out 0.2s forwards;
+        }
+
+        .eyebrow {
+            font-size: 0.7rem; letter-spacing: 0.4em; color: var(--accent-gold);
+            text-transform: uppercase; margin-bottom: 1rem;
+        }
+
+        .title {
+            font-family: var(--font-serif); font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 400; line-height: 1.1; margin-bottom: 2.5rem; color: var(--text-light);
+        }
+
+        .timer-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;
+            margin-bottom: 2rem; max-width: 400px;
+        }
+
+        .time-box {
+            display: flex; flex-direction: column;
+            border-left: 1px solid rgba(220, 167, 113, 0.3); padding-left: 10px;
+        }
+
+        .time-val {
+            font-family: var(--font-serif); font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+            color: var(--text-light); line-height: 1;
+        }
+
+        .time-label {
+            font-size: 0.65rem; letter-spacing: 0.15em; color: var(--accent-gold);
+            text-transform: uppercase; margin-top: 6px;
+        }
+
+        .quote {
+            font-family: var(--font-serif); font-size: clamp(1rem, 1.5vw, 1.25rem);
+            font-style: italic; color: rgba(249, 235, 234, 0.8); line-height: 1.6;
+            max-width: 85%; border-top: 1px solid rgba(249, 235, 234, 0.1); padding-top: 1.5rem;
+        }
+
+        /* NEW: The Read Letter Button */
+        .letter-btn {
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 10px 24px;
+            font-family: var(--font-serif);
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 1.5rem;
+            align-self: flex-start;
+        }
+
+        .letter-btn:hover {
+            background: var(--accent-gold);
+            color: var(--dark-red);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* --- RIGHT: CLEAR PHOTOS --- */
+        .photo-panel {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            gap: 25px; padding: 0 4vw; opacity: 0;
+            animation: fade-in 1.5s ease-out 0.5s forwards;
+        }
+
+        .photo-frame {
+            width: 42%; aspect-ratio: 3/4; background: var(--text-light); padding: 6px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid var(--accent-gold);
+            transition: transform 0.4s ease, box-shadow 0.4s ease; position: relative;
+        }
+
+        .photo-1 { transform: translateY(-20px); }
+        .photo-2 { transform: translateY(20px); }
+
+        .photo-frame:hover { transform: translateY(0) scale(1.03); box-shadow: 0 20px 45px rgba(0,0,0,0.5); z-index: 10; }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           4. HIDDEN LOVE LETTER MODAL
+           ========================================= */
+        .letter-modal {
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(94, 17, 24, 0.85); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+        }
+
+        .letter-modal.active {
+            opacity: 1; pointer-events: auto;
+        }
+
+        .letter-content {
+            background: var(--text-light); color: var(--dark-red);
+            width: 90%; max-width: 450px; padding: 3rem 2.5rem;
+            border-radius: 2px; border: 2px solid var(--accent-gold);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative;
+            transform: translateY(30px); transition: transform 0.5s ease;
+            text-align: center; font-family: var(--font-serif);
+        }
+
+        .letter-modal.active .letter-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute; top: 15px; right: 20px;
+            background: none; border: none; color: var(--accent-gold);
+            font-size: 1.5rem; cursor: pointer; transition: color 0.3s;
+        }
+        .close-btn:hover { color: var(--dark-red); }
+
+        .letter-content h2 {
+            font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--dark-red);
+        }
+
+        .letter-content p {
+            font-size: 1.1rem; line-height: 1.7; margin-bottom: 1rem; color: #4A0E13;
+        }
+
+        .letter-sign {
+            margin-top: 2rem; font-size: 1.2rem; font-style: italic; color: var(--accent-gold);
+        }
+
+        /* Fade in lines for romance */
+        .fade-line { opacity: 0; transform: translateY(10px); }
+        .letter-modal.active .fade-line { animation: fadeLineAnim 1s ease forwards; }
+        .delay-1 { animation-delay: 0.5s !important; }
+        .delay-2 { animation-delay: 1.5s !important; }
+        .delay-3 { animation-delay: 2.5s !important; }
+
+        @keyframes fadeLineAnim { to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           5. MOBILE RESPONSIVENESS
            ========================================= */
         @media (max-width: 768px) {
-            .container { padding: 20px 15px; }
-            
-            /* Change Timer to 2x2 Grid on Mobile */
-            .timer-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
+            .container { flex-direction: column; }
+            .divider { display: none; }
+            .audio-btn { top: 25px; right: 25px; background: transparent; border: none; padding: 0; }
+            .audio-btn span { display: none; } 
+            .audio-btn .music-icon { font-size: 1.2rem; }
 
-            .time-val { font-size: 1.8rem; }
+            .text-panel { flex: 0 0 45%; padding: 10vh 6vw 0 6vw; justify-content: flex-end; padding-bottom: 1.5rem; align-items: center; }
+            .title { font-size: 2.8rem; margin-bottom: 1.5rem; text-align: center; }
+            .eyebrow { text-align: center; }
+            .timer-grid { margin: 0 auto 1.5rem auto; width: 100%; gap: 10px; }
+            .time-box { align-items: center; border-left: none; padding-left: 0; }
+            .time-val { font-size: 1.6rem; }
+            .quote { display: none; } 
             
-            /* Disable 3D tilt on mobile for better scrolling */
-            .photo-card {
-                transform: none !important; /* Forces flat design on mobile */
-                width: 100%; /* Full width on small phones */
-                margin-bottom: 20px;
-            }
-            
-            .photo-card:active {
-                transform: scale(0.98) !important; /* Simple press effect */
-            }
+            .letter-btn { align-self: center; margin-top: 0; }
+
+            .photo-panel { flex: 1; align-items: flex-start; padding: 1.5rem 6vw 0 6vw; gap: 15px; }
+            .photo-frame { width: 50%; }
+            .photo-1, .photo-2 { transform: none; }
+            .photo-frame:hover { transform: none; }
         }
     </style>
 </head>
 <body>
 
-    <div id="petals-container"></div>
+    <div id="youtube-player"></div>
 
-    <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="music-toggle" onclick="toggleMusic()">
-        <span class="music-icon">🎵</span>
-    </div>
+    <button class="audio-btn paused" id="audioBtn" onclick="toggleAudio()">
+        <span class="music-icon">♪</span>
+        <span>Play Audio</span>
+    </button>
 
     <div class="container">
+        <div class="divider"></div>
         
-        <header>
-            <h1>Rania & Elarbi</h1>
-            <div class="subtitle">Written in the stars, coded with love</div>
-        </header>
-
-        <div class="love-timer">
-            <h3 style="margin:0; color:#555; font-weight: 400;">Together since September 28, 2025</h3>
-            <div class="timer-grid">
-                <div class="time-box"><span id="days" class="time-val">0</span><span class="time-label">Days</span></div>
-                <div class="time-box"><span id="hours" class="time-val">0</span><span class="time-label">Hours</span></div>
-                <div class="time-box"><span id="minutes" class="time-val">0</span><span class="time-label">Minutes</span></div>
-                <div class="time-box"><span id="seconds" class="time-val">0</span><span class="time-label">Seconds</span></div>
-            </div>
-            <p style="margin-top:20px; font-style: italic; color:var(--text-light); font-size: 0.9rem;">
-                "And I've loved every second of it."
-            </p>
-        </div>
-
-        <h2 class="gallery-title">Our Best Moments</h2>
-        
-        <div class="gallery-container">
+        <div class="text-panel">
+            <span class="eyebrow">Our Story</span>
+            <h1 class="title">Rania & Elarbi</h1>
             
-            <div class="photo-card" id="card1">
-                <img src="1.jpeg" alt="Us Together">
-                <div class="caption">My Style, Your Grace</div>
+            <div class="timer-grid">
+                <div class="time-box">
+                    <span class="time-val" id="days">00</span>
+                    <span class="time-label">Days</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="hours">00</span>
+                    <span class="time-label">Hrs</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="minutes">00</span>
+                    <span class="time-label">Min</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="seconds">00</span>
+                    <span class="time-label">Sec</span>
+                </div>
             </div>
 
-            <div class="photo-card" id="card2">
-                <img src="2.jpeg" alt="Smiles">
-                <div class="caption">Pure Happiness</div>
-            </div>
-
+            <p class="quote">"Because every second with you feels like a masterpiece painted in red and gold."</p>
+            
+            <button class="letter-btn" onclick="openLetter()">A Letter For You</button>
         </div>
 
-        <footer style="margin-top: 80px; opacity: 0.6; font-size: 0.8rem; padding-bottom: 80px;">
-            Made by Elarbi for Rania ❤️
-        </footer>
-
+        <div class="photo-panel">
+            <div class="photo-frame photo-1">
+                <img src="1.jpeg" alt="Grace">
+            </div>
+            <div class="photo-frame photo-2">
+                <img src="2.jpeg" alt="Happiness">
+            </div>
+        </div>
     </div>
+
+    <div class="letter-modal" id="letterModal">
+        <div class="letter-content">
+            <button class="close-btn" onclick="closeLetter()">✕</button>
+            <h2 class="fade-line">My Dearest Rania,</h2>
+            <p class="fade-line delay-1">Every beautiful thing I see reminds me of you. This digital space is just a tiny reflection of what you mean to me.</p>
+            <p class="fade-line delay-2">Time is measured in numbers, but the moments we share are what truly count. Here is to all the seconds we've spent together, and the millions more to come.</p>
+            <div class="letter-sign fade-line delay-3">— Elarbi</div>
+        </div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         // =========================================
-        // 1. DATES CONFIGURATION
+        // 1. YOUTUBE AUDIO LOGIC
         // =========================================
-        // September 28, 2025 (Month is 0-indexed: Sept = 8)
-        const startDate = new Date(2025, 8, 28); 
+        let player;
+        const audioBtn = document.getElementById('audioBtn');
+        const audioText = audioBtn.querySelector('span:not(.music-icon)');
 
-        // =========================================
-        // 2. PETALS ANIMATION LOGIC
-        // =========================================
-        function createPetals() {
-            const container = document.getElementById('petals-container');
-            const petalCount = 20; 
-
-            for(let i=0; i<petalCount; i++){
-                const petal = document.createElement('div');
-                petal.classList.add('petal');
-                petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                petal.style.animationDelay = Math.random() * 5 + 's';
-                petal.style.width = (Math.random() * 10 + 10) + 'px';
-                petal.style.height = (Math.random() * 10 + 10) + 'px';
-                container.appendChild(petal);
-            }
-        }
-        createPetals();
-
-        // =========================================
-        // 3. TIMER LOGIC
-        // =========================================
-        function updateTimer() {
-            const now = new Date();
-            const diff = now - startDate;
-
-            if (diff < 0) return; 
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
-
-            document.getElementById('days').innerText = days;
-            document.getElementById('hours').innerText = hours;
-            document.getElementById('minutes').innerText = minutes;
-            document.getElementById('seconds').innerText = seconds;
-        }
-        setInterval(updateTimer, 1000);
-        updateTimer();
-
-        // =========================================
-        // 4. DESKTOP-ONLY 3D TILT LOGIC
-        // =========================================
-        if (window.matchMedia("(hover: hover)").matches) {
-            const cards = document.querySelectorAll('.photo-card');
-            
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = ((y - centerY) / centerY) * -10;
-                    const rotateY = ((x - centerX) / centerX) * 10;
-
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
-                });
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0', width: '0', videoId: 'vCZbPQkC40c',
+                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'vCZbPQkC40c', 'playsinline': 1 },
+                events: { 'onReady': () => audioBtn.classList.add('ready') }
             });
         }
 
-        // =========================================
-        // 5. MUSIC LOGIC
-        // =========================================
-        function toggleMusic() {
-            const audio = document.getElementById('bg-music');
-            const icon = document.querySelector('.music-icon');
-            if(audio.paused) {
-                audio.play();
-                icon.innerText = '⏸️';
+        function toggleAudio() {
+            if (!player || typeof player.getPlayerState !== 'function') return;
+            const state = player.getPlayerState();
+            
+            if (state === 1) {
+                player.pauseVideo();
+                audioBtn.classList.add('paused');
+                if(audioText) audioText.innerText = 'Play Audio';
             } else {
-                audio.pause();
-                icon.innerText = '🎵';
+                player.playVideo();
+                audioBtn.classList.remove('paused');
+                if(audioText) audioText.innerText = 'Pause';
             }
         }
+
+        // =========================================
+        // 2. TIMELINE LOGIC (Since Sept 28, 2025)
+        // =========================================
+        const startDate = new Date(2025, 8, 28);
+
+        function padZero(num) { return num < 10 ? '0' + num : num; }
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            if (diff < 0) return; 
+
+            document.getElementById('days').innerText = padZero(Math.floor(diff / (1000 * 60 * 60 * 24)));
+            document.getElementById('hours').innerText = padZero(Math.floor((diff / (1000 * 60 * 60)) % 24));
+            document.getElementById('minutes').innerText = padZero(Math.floor((diff / (1000 * 60)) % 60));
+            document.getElementById('seconds').innerText = padZero(Math.floor((diff / 1000) % 60));
+        }
+        updateTimer(); setInterval(updateTimer, 1000);
+
+        // =========================================
+        // 3. LETTER MODAL LOGIC
+        // =========================================
+        const letterModal = document.getElementById('letterModal');
+        
+        function openLetter() {
+            letterModal.classList.add('active');
+        }
+        
+        function closeLetter() {
+            letterModal.classList.remove('active');
+        }
+
+        // Close when clicking outside the letter
+        letterModal.addEventListener('click', (e) => {
+            if(e.target === letterModal) {
+                closeLetter();
+            }
+        });
     </script>
 </body>
 </html>
